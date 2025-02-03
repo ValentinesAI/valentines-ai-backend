@@ -9,10 +9,12 @@ app.use(cors());
 
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 
+// ✅ Default route for checking if the server is running
 app.get("/", (req, res) => {
     res.send("Valentine's AI Backend is running! 💘");
 });
 
+// ✅ Fix API Route (POST request)
 app.post("/api/flirty-response", async (req, res) => {
     const userMessage = req.body.message;
 
