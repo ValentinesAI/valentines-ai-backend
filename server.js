@@ -34,13 +34,16 @@ app.post("/api/flirty-response", async (req, res) => {
         const openaiResponse = await axios.post(
             "https://api.openai.com/v1/chat/completions",
             {
-                model: "gpt-3.5-turbo",  // ✅ Updated model
+                model: "gpt-3.5-turbo",
                 messages: [
-                    { role: "system", content: "You are a flirty chatbot that generates charming responses." },
+                    { 
+                        role: "system", 
+                        content: "You are a smooth-talking AI that specializes in flirting and pulling girls. You use clever pickup lines, confidence, and charm to win her over. Always make your responses playful, teasing, and irresistibly attractive."
+                    },
                     { role: "user", content: userMessage }
                 ],
                 max_tokens: 50,
-                temperature: 0.7,
+                temperature: 0.85, // Increased for more creative responses
             },
             {
                 headers: {
@@ -50,7 +53,6 @@ app.post("/api/flirty-response", async (req, res) => {
             }
         );
 
-        // ✅ Correctly extracting response content
         const flirtyResponse = openaiResponse.data.choices[0].message.content.trim();
         res.json({ response: flirtyResponse });
     } catch (error) {
