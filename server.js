@@ -24,20 +24,23 @@ app.post("/api/flirty-response", async (req, res) => {
 
     try {
         const openaiResponse = await axios.post(
-            "https://api.openai.com/v1/completions",
-            {
-                model: "text-davinci-003",
-                prompt: `Make this message flirty:\n\n"${userMessage}"\n\nFlirty response:`,
-                max_tokens: 50,
-                temperature: 0.7,
-            },
-            {
-                headers: {
-                    "Authorization": `Bearer ${OPENAI_API_KEY}`,
-                    "Content-Type": "application/json",
-                },
-            }
-        );
+    "https://api.openai.com/v1/chat/completions",
+    {
+        model: "gpt-3.5-turbo",  // ✅ Updated model
+        messages: [
+            { role: "system", content: "You are a flirty chatbot that generates charming responses." },
+            { role: "user", content: userMessage }
+        ],
+        max_tokens: 50,
+        temperature: 0.7,
+    },
+    {
+        headers: {
+            "Authorization": `Bearer ${OPENAI_API_KEY}`,
+            "Content-Type": "application/json",
+        },
+    }
+);
 
         const flirtyResponse = openaiResponse.data.choices[0].text.trim();
         res.json({ response: flirtyResponse });
